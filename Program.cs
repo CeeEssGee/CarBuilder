@@ -165,7 +165,14 @@ app.MapGet("/paints", () =>
 
 app.MapGet("/orders", () =>
 {
-    return orders;
+    foreach (Order order in orders)
+    {
+        order.Interior = interiors.FirstOrDefault(i => i.Id == order.InteriorId);
+        order.Wheels = wheels.FirstOrDefault(w => w.Id == order.WheelId);
+        order.Paint = paints.FirstOrDefault(p => p.Id == order.PaintId);
+        order.Technology = technologies.FirstOrDefault(t => t.Id == order.TechnologyId);
+    }
+    return Results.Ok(orders);
 });
 
 app.MapPost("/orders", (Order order) =>
