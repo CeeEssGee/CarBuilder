@@ -131,9 +131,24 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.Run();
-
-record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
+app.MapGet("/wheels", () =>
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+    return wheels;
+});
+
+app.MapGet("/technologies", () =>
+{
+    return technologies;
+});
+
+app.MapGet("/interiors", () =>
+{
+    return interiors;
+});
+
+app.MapGet("/paintcolors", () =>
+{
+    return paintColors;
+});
+
+app.Run();
