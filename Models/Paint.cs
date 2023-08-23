@@ -1,6 +1,6 @@
 namespace CarBuilderAPI.Models;
 
-public class PaintColor
+public class Paint
 {
     public int Id { get; set; }
     public decimal Price { get; set; }

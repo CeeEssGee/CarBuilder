@@ -1,27 +1,27 @@
 using System.Net.NetworkInformation;
 using CarBuilderAPI.Models;
 
-List<PaintColor> paintColors = new List<PaintColor>
+List<Paint> paints = new List<Paint>
 {
-    new PaintColor()
+    new Paint()
     {
         Id = 1,
         Price = 350M,
         Color = "Silver"
     },
-    new PaintColor()
+    new Paint()
     {
         Id = 2,
         Price = 400M,
         Color = "Midnight Blue"
     },
-    new PaintColor()
+    new Paint()
     {
         Id = 3,
         Price = 450M,
         Color = "Firebrick Red"
     },
-    new PaintColor()
+    new Paint()
     {
         Id = 4,
         Price = 500M,
@@ -35,25 +35,25 @@ List<Interior> interiors = new List<Interior>
     {
         Id = 1,
         Price = 1200M,
-        Material = "Beige Fabric"
+        Name = "Beige Fabric"
     },
     new Interior()
     {
         Id = 2,
         Price = 1200M,
-        Material = "Charcoal Fabric"
+        Name = "Charcoal Fabric"
     },
     new Interior()
     {
         Id = 3,
         Price = 3500,
-        Material = "White Leather"
+        Name = "White Leather"
     },
     new Interior()
     {
         Id = 4,
         Price = 3000,
-        Material = "Black Leather"
+        Name = "Black Leather"
     }
 };
 
@@ -124,6 +124,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -132,6 +133,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors(options =>
+    {
+        options.AllowAnyOrigin();
+        options.AllowAnyMethod();
+        options.AllowAnyHeader();
+    });
 }
 
 app.UseHttpsRedirection();
@@ -151,9 +158,9 @@ app.MapGet("/interiors", () =>
     return interiors;
 });
 
-app.MapGet("/paintcolors", () =>
+app.MapGet("/paints", () =>
 {
-    return paintColors;
+    return paints;
 });
 
 app.MapGet("/orders", () =>
