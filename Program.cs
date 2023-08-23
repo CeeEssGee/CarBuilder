@@ -113,6 +113,11 @@ List<Wheels> wheels = new List<Wheels>
     }
 };
 
+List<Order> orders = new List<Order>
+{
+
+};
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -149,6 +154,20 @@ app.MapGet("/interiors", () =>
 app.MapGet("/paintcolors", () =>
 {
     return paintColors;
+});
+
+app.MapGet("/orders", () =>
+{
+    return orders;
+});
+
+app.MapPost("/orders", (Order order) =>
+{
+    // create a new id
+    order.Id = orders.Count > 0 ? orders.Max(o => o.Id) + 1 : 1;
+    order.Timestamp = DateTime.Now;
+    orders.Add(order);
+    return order;
 });
 
 app.Run();
