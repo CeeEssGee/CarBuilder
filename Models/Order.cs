@@ -12,6 +12,7 @@ public class Order
     public Technology Technology { get; set; }
     public Paint Paint { get; set; }
     public Interior Interior { get; set; }
+    public bool Fulfilled { get; set; }
     public Decimal TotalCost
     {
         get
