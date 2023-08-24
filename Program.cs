@@ -184,4 +184,10 @@ app.MapPost("/orders", (Order order) =>
     return order;
 });
 
+app.MapPost("/orders/{orderId}/fulfill", (int orderId) =>
+{
+    Order orderToFulfill = orders.FirstOrDefault(o => o.Id == orderId);
+    orderToFulfill.Fulfilled = true;
+});
+
 app.Run();
