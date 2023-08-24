@@ -163,16 +163,30 @@ app.MapGet("/paints", () =>
     return paints;
 });
 
+// app.MapGet("/orders", () =>
+// {
+//     foreach (Order order in orders)
+//     {
+//         order.Interior = interiors.FirstOrDefault(i => i.Id == order.InteriorId);
+//         order.Wheels = wheels.FirstOrDefault(w => w.Id == order.WheelId);
+//         order.Paint = paints.FirstOrDefault(p => p.Id == order.PaintId);
+//         order.Technology = technologies.FirstOrDefault(t => t.Id == order.TechnologyId);
+//     }
+//     return Results.Ok(orders);
+// });
+
 app.MapGet("/orders", () =>
 {
-    foreach (Order order in orders)
+    List<Order> unfulfilledOrders = orders.Where(o => !o.Fulfilled).ToList();
+
+    foreach (Order order in unfulfilledOrders)
     {
         order.Interior = interiors.FirstOrDefault(i => i.Id == order.InteriorId);
         order.Wheels = wheels.FirstOrDefault(w => w.Id == order.WheelId);
         order.Paint = paints.FirstOrDefault(p => p.Id == order.PaintId);
         order.Technology = technologies.FirstOrDefault(t => t.Id == order.TechnologyId);
     }
-    return Results.Ok(orders);
+    return Results.Ok(unfulfilledOrders);
 });
 
 app.MapPost("/orders", (Order order) =>
